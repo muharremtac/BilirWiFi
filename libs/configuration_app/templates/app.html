@@ -5,22 +5,22 @@
     <div id="wpaStatus">
       <ul>
         {% if config_hash['wpa_enabled'] == '1': %}
-          <li><a href="{{ url_for('wpa_settings') }}">Config. Mode WPA: ENABLED</a></li>
-          <li><a href="{{ url_for('wpa_settings') }}">Key: {{ config_hash['wpa_key'] }}</a></li>
+          <li><a href="{{ url_for('wpa_settings') }}">Kablosuz: aktif</a></li>
+          <li><a href="{{ url_for('wpa_settings') }}">Wifi şifresi: {{ config_hash['wpa_key'] }}</a></li>
         {% endif %}
 
         {% if config_hash['wpa_enabled'] == '0': %}
-          <li><a href="{{ url_for('wpa_settings') }}">Config. Mode WPA: DISABLED</a></li>
+          <li><a href="{{ url_for('wpa_settings') }}">Kablosuz: pasif</a></li>
       {% endif %}
       </ul>
     </div>
 
-    <h1>WiFi Setup</h1>
+    <h1>Bilir Kablosuz Ağ Kurulumu</h1>
     <div class="wifiIcon"></div>
 
     <form action="{{ url_for('save_credentials') }}" method=post>
       <ul>
-        <li><label for="ssid">Select your WiFi network</label></li>
+        <li><label for="ssid">Lütfen Bilir'in bağlanacağı kablosuz ağı seçiniz</label></li>
 
         <li class="wifiNetwork">
           <select id="ssid" name="ssid", class="wifiNetworkInputs">
@@ -30,12 +30,12 @@
           </select>
         </li>
 
-        <li><a href="{{ url_for('manual_ssid_entry') }}" class="manualSSIDEntry">manual SSID entry -></a></li>
+        <li><a href="{{ url_for('manual_ssid_entry') }}" class="manualSSIDEntry">kendiniz de kablosuz ağı girebilirsiniz -></a></li>
 
-        <li><label for="wifi_key">Your Wifi password</label></li>
-        <li><input type="password" name="wifi_key", class="wifiNetworkInputs"></li>
+        <li><label for="wifi_key">Kablosuz ağ şifreniz</label></li>
+        <li><input type="text" name="wifi_key", class="wifiNetworkInputs"></li>
 
-        <input type="submit", class="wifiConnectButton">
+        <input type="submit" class="wifiConnectButton" value="Kablosuz Ağ Ayarlarını Bilir'e gönder">
       </ul>
     </form>
   </div>
