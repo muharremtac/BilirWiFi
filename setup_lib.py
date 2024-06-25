@@ -8,7 +8,7 @@ def install_prereqs():
 	os.system('clear')
 	print("Installing Flask web server...")
 	print()
-	os.system('pip3 install flask pyopenssl')
+	os.system('pip3 install flask pyopenssl --break-system-packages')
 	os.system('clear')
 
 def copy_configs(wpa_enabled_choice):
@@ -33,6 +33,10 @@ def copy_configs(wpa_enabled_choice):
 	os.system('echo "# BilirWiFi Startup" >> /etc/crontab')
 	os.system('echo "@reboot root run-parts /etc/cron.raspiwifi/" >> /etc/crontab')
 	os.system('mv /usr/lib/raspiwifi/reset_device/static_files/raspiwifi.conf /etc/raspiwifi')
+	os.system('sudo systemctl unmask hostapd')
+	os.system('sudo systemctl enable hostapd')
+	os.system('mv /usr/lib/raspiwifi/reset_device/static_files/rc.local /etc/rc.local')
+	os.system('sudo chmod +x /etc/rc.local')
 	os.system('touch /etc/raspiwifi/host_mode')
 
 def update_main_config_file(entered_ssid, auto_config_choice, auto_config_delay, ssl_enabled_choice, server_port_choice, wpa_enabled_choice, wpa_entered_key):
