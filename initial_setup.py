@@ -3,19 +3,7 @@ import sys
 import setup_lib
 
 
-if os.getuid():
-    sys.exit('You need root access to install!')
-
-def getMAC(interface='eth0'):
-  # Return the MAC address of the specified interface
-  try:
-    str = open('/sys/class/net/%s/address' %interface).read()
-  except:
-    str = "00:00:00:00:00:00"
-  return str[0:17]
-
-mac_address = getMAC('wlan0').replace(":", "")
-entered_ssid = "bilir" + mac_address
+entered_ssid = "bilirvoice"
 
 os.system('clear')
 print()

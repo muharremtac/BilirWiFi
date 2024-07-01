@@ -110,21 +110,26 @@ def create_wpa_supplicant(ssid, wifi_key):
     temp_nmconnection_file.write('method=ignore\n')
     temp_nmconnection_file.close
 
-    os.system('systemctl disable dnsmasq')
-    os.system('systemctl stop dnsmasq')
-    os.system('systemctl disable hostapd')
-    os.system('systemctl stop hostapd')
-
     os.system('mv wifi.nmconnection.tmp /etc/NetworkManager/system-connections/' + ssid + '.nmconnection')
     os.system('sudo chown root:root /etc/NetworkManager/system-connections/' + ssid + '.nmconnection')
     os.system('sudo chmod 600 /etc/NetworkManager/system-connections/' + ssid + '.nmconnection')
 
-    network_manager = subprocess.Popen(f'systemctl restart NetworkManager', shell=True, stdout=subprocess.PIPE,
+    network_manager = subprocess.Popen('sudo systemctl restart NetworkManager', shell=True, stdout=subprocess.PIPE,
                                        stderr=subprocess.PIPE, universal_newlines=True)
     network_manager.communicate()
 
     os.system('sudo nmcli radio wifi on')
     os.system('sudo nmcli conn reload')
+
+    os.system('sudo systemctl disable dnsmasq')
+    os.system('sudo systemctl stop dnsmasq')
+    os.system('sudo systemctl disable hostapd')
+    os.system('sudo systemctl stop hostapd')
+
+    os.system('sudo systemctl enable wyoming-satellite')
+    os.system('sudo systemctl start wyoming-satellite')
+    os.system('sudo systemctl enable mpd')
+    os.system('sudo systemctl start mpd')
 
     nmcli = subprocess.Popen(f'sudo nmcli connection up {ssid}',
                       shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
