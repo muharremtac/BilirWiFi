@@ -4,7 +4,7 @@ import subprocess
 
 
 def config_file_hash():
-    config_file = open('/etc/raspiwifi/raspiwifi.conf')
+    config_file = open('/etc/bilirwifi/bilirwifi.conf')
     config_hash = {}
 
     for line in config_file:
@@ -26,7 +26,7 @@ def wpa_check_activate(wpa_enabled, wpa_key):
 
     if wpa_enabled == '1' and wpa_active == False:
         reboot_required = True
-        os.system('cp /usr/lib/raspiwifi/reset_device/static_files/hostapd.conf.wpa /etc/hostapd/hostapd.conf')
+        os.system('cp /usr/lib/bilirwifi/reset_device/static_files/hostapd.conf.wpa /etc/hostapd/hostapd.conf')
 
     if wpa_enabled == '1':
         changes_made = False
@@ -45,7 +45,7 @@ def wpa_check_activate(wpa_enabled, wpa_key):
 
     if wpa_enabled == '0' and wpa_active == True:
         reboot_required = True
-        os.system('cp /usr/lib/raspiwifi/reset_device/static_files/hostapd.conf.nowpa /etc/hostapd/hostapd.conf')
+        os.system('cp /usr/lib/bilirwifi/reset_device/static_files/hostapd.conf.nowpa /etc/hostapd/hostapd.conf')
 
     return reboot_required
 
@@ -82,15 +82,15 @@ def is_wifi_active():
 
 
 def reset_to_host_mode():
-    if not os.path.isfile('/etc/raspiwifi/host_mode'):
+    if not os.path.isfile('/etc/bilirwifi/host_mode'):
         os.system('rm -f /etc/wpa_supplicant/wpa_supplicant.conf')
-        os.system('rm /etc/cron.raspiwifi/apclient_bootstrapper')
-        os.system('cp /usr/lib/raspiwifi/reset_device/static_files/aphost_bootstrapper /etc/cron.raspiwifi/')
-        os.system('chmod +x /etc/cron.raspiwifi/aphost_bootstrapper')
+        os.system('rm /etc/cron.bilirwifi/apclient_bootstrapper')
+        os.system('cp /usr/lib/bilirwifi/reset_device/static_files/aphost_bootstrapper /etc/cron.bilirwifi/')
+        os.system('chmod +x /etc/cron.bilirwifi/aphost_bootstrapper')
         os.system('mv /etc/dhcpcd.conf /etc/dhcpcd.conf.original')
-        os.system('cp /usr/lib/raspiwifi/reset_device/static_files/dhcpcd.conf /etc/')
+        os.system('cp /usr/lib/bilirwifi/reset_device/static_files/dhcpcd.conf /etc/')
         os.system('mv /etc/dnsmasq.conf /etc/dnsmasq.conf.original')
-        os.system('cp /usr/lib/raspiwifi/reset_device/static_files/dnsmasq.conf /etc/')
-        os.system('cp /usr/lib/raspiwifi/reset_device/static_files/dhcpcd.conf /etc/')
-        os.system('touch /etc/raspiwifi/host_mode')
+        os.system('cp /usr/lib/bilirwifi/reset_device/static_files/dnsmasq.conf /etc/')
+        os.system('cp /usr/lib/bilirwifi/reset_device/static_files/dhcpcd.conf /etc/')
+        os.system('touch /etc/bilirwifi/host_mode')
     os.system('reboot')

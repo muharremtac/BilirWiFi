@@ -7,7 +7,7 @@ no_conn_counter = 0
 consecutive_active_reports = 0
 config_hash = reset_lib.config_file_hash()
 
-# If auto_config is set to 0 in /etc/raspiwifi/raspiwifi.conf exit this script
+# If auto_config is set to 0 in /etc/bilirwifi/bilirwifi.conf exit this script
 if config_hash['auto_config'] == "0":
     sys.exit()
 else:
@@ -33,7 +33,7 @@ else:
                 consecutive_active_reports = 0
 
         # If the number of seconds not associated with an AP is greater or
-        # equal to the auto_config_delay specified in the /etc/raspiwifi/raspiwifi.conf
+        # equal to the auto_config_delay specified in the /etc/bilirwifi/bilirwifi.conf
         # trigger a reset into AP Host (Configuration) mode.
         if no_conn_counter >= int(config_hash['auto_config_delay']):
             reset_lib.reset_to_host_mode()

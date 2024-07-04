@@ -1,7 +1,7 @@
 #!/bin/bash
 
-python3 /usr/lib/raspiwifi/reset_device/reset.py &
+python3 /usr/lib/bilirwifi/reset_device/reset.py &
 
-python3 /usr/lib/raspiwifi/configuration_app/app.py &
+python3 /usr/lib/bilirwifi/configuration_app/app.py &
 
 hostapd -dd /etc/hostapd/hostapd.conf &

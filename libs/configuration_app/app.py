@@ -61,7 +61,7 @@ def save_wpa_credentials():
 
     def sleep_and_reboot_for_wpa():
         time.sleep(2)
-        os.system('cp /usr/lib/raspiwifi/configuration_app/rc.local.backup /etc/rc.local')
+        os.system('cp /usr/lib/bilirwifi/configuration_app/rc.local.backup /etc/rc.local')
         os.system('reboot')
 
     t = Thread(target=sleep_and_reboot_for_wpa)
@@ -89,7 +89,7 @@ def scan_wifi_networks():
 
 
 def create_wpa_supplicant(ssid, wifi_key):
-    os.system('cp /usr/lib/raspiwifi/configuration_app/rc.local.backup /etc/rc.local')
+    os.system('cp /usr/lib/bilirwifi/configuration_app/rc.local.backup /etc/rc.local')
 
     uuid1 = uuid.uuid1()
     temp_nmconnection_file = open('wifi.nmconnection.tmp', 'w')
@@ -110,21 +110,21 @@ def create_wpa_supplicant(ssid, wifi_key):
     temp_nmconnection_file.write('method=ignore\n')
     temp_nmconnection_file.close
 
-    os.system('systemctl disable dnsmasq')
-    os.system('systemctl stop dnsmasq')
-    os.system('systemctl disable hostapd')
-    os.system('systemctl stop hostapd')
-
     os.system('mv wifi.nmconnection.tmp /etc/NetworkManager/system-connections/' + ssid + '.nmconnection')
     os.system('sudo chown root:root /etc/NetworkManager/system-connections/' + ssid + '.nmconnection')
     os.system('sudo chmod 600 /etc/NetworkManager/system-connections/' + ssid + '.nmconnection')
 
-    network_manager = subprocess.Popen(f'systemctl restart NetworkManager', shell=True, stdout=subprocess.PIPE,
+    network_manager = subprocess.Popen('sudo systemctl restart NetworkManager', shell=True, stdout=subprocess.PIPE,
                                        stderr=subprocess.PIPE, universal_newlines=True)
     network_manager.communicate()
 
     os.system('sudo nmcli radio wifi on')
     os.system('sudo nmcli conn reload')
+
+    os.system('sudo systemctl disable dnsmasq')
+    os.system('sudo systemctl stop dnsmasq')
+    os.system('sudo systemctl disable hostapd')
+    os.system('sudo systemctl stop hostapd')
 
     nmcli = subprocess.Popen(f'sudo nmcli connection up {ssid}',
                       shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
@@ -132,18 +132,18 @@ def create_wpa_supplicant(ssid, wifi_key):
     nmcli.communicate()
 
 def set_ap_client_mode():
-    os.system('cp /usr/lib/raspiwifi/configuration_app/rc.local.backup /etc/rc.local')
-    os.system('rm -f /etc/raspiwifi/host_mode')
-    os.system('rm /etc/cron.raspiwifi/aphost_bootstrapper')
-    os.system('cp /usr/lib/raspiwifi/reset_device/static_files/apclient_bootstrapper /etc/cron.raspiwifi/')
-    os.system('chmod +x /etc/cron.raspiwifi/apclient_bootstrapper')
+    os.system('cp /usr/lib/bilirwifi/configuration_app/rc.local.backup /etc/rc.local')
+    os.system('rm -f /etc/bilirwifi/host_mode')
+    os.system('rm /etc/cron.bilirwifi/aphost_bootstrapper')
+    os.system('cp /usr/lib/bilirwifi/reset_device/static_files/apclient_bootstrapper /etc/cron.bilirwifi/')
+    os.system('chmod +x /etc/cron.bilirwifi/apclient_bootstrapper')
     os.system('mv /etc/dnsmasq.conf.original /etc/dnsmasq.conf')
     os.system('mv /etc/dhcpcd.conf.original /etc/dhcpcd.conf')
     os.system('reboot')
 
 
 def update_wpa(wpa_enabled, wpa_key):
-    with fileinput.FileInput('/etc/raspiwifi/raspiwifi.conf', inplace=True) as raspiwifi_conf:
+    with fileinput.FileInput('/etc/bilirwifi/bilirwifi.conf', inplace=True) as raspiwifi_conf:
         for line in raspiwifi_conf:
             if 'wpa_enabled=' in line:
                 line_array = line.split('=')
@@ -160,7 +160,7 @@ def update_wpa(wpa_enabled, wpa_key):
 
 
 def config_file_hash():
-    config_file = open('/etc/raspiwifi/raspiwifi.conf')
+    config_file = open('/etc/bilirwifi/bilirwifi.conf')
     config_hash = {}
 
     for line in config_file:
