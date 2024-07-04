@@ -1,19 +1,16 @@
-RaspiWiFi
+This project is based on RaspiWifi
 
-RaspiWiFi is a program to headlessly configure a Raspberry Pi's WiFi
+BilirWifi is a program to headlessly configure a Raspberry Pi's WiFi
 connection using using any other WiFi-enabled device (much like the way
 a Chromecast or similar device can be configured).
 
 It can also be used as a method to connect wirelessly point-to-point with your
 Pi when a network is not available or you do not want to connect to one. Just
-leave it in Configuration Mode, connect to the "RaspiWiFi[xxxx] Setup" access
+leave it in Configuration Mode, connect to the "BilirWifi[xxxx] Setup" access
 point. The Pi will be addressable at 10.0.0.1 using all the normal methods you
 might use while connected through a network.
 
-RaspiWiFi has been
-tested with the Raspberry Pi B+, Raspberry Pi 3, and Raspberry Pi Zero W.
-
-
+BilirWifi has been tested with RaspiOS Bookworm version
 
 OS IMAGE USAGE:
 
@@ -28,7 +25,7 @@ this release.
 
  SCRIPT-BASED INSTALLATION INSTRUCTIONS:
 
-== Navigate to the directory where you downloaded or cloned RaspiWiFi
+== Navigate to the directory where you downloaded or cloned BilirWifi
 
 == Run:
 
@@ -37,18 +34,18 @@ sudo python3 initial_setup.py
 == This script will install all necessary prerequisites and copy all necessary
 config and library files, then reboot. When it finishes booting it should
 present itself in "Configuration Mode" as a WiFi access point with the
-name "RaspiWiFi[xxxx] Setup".
+name "bilir[MAC ADDRESS] Setup".
 
-== The original RaspiWiFi directory that you ran the Initial Setup is no longer
+== The original BilirWifi directory that you ran the Initial Setup is no longer
 needed after installation and can be safely deleted. All necessary files are
-copied to /usr/lib/raspiwifi/ on setup.
+copied to /usr/lib/bilirwifi/ on setup.
 
 
 CONFIGURATION:
 
 == You will be prompted to set a few variables during the Initial Setup script:
 
-==== "SSID Prefix" [default: "RaspiWiFi Setup"]: This is the prefix of the SSID
+==== "SSID Prefix" [default: "bilir[MAC ADDRESS]"]: This is the prefix of the SSID
       that your Pi will broadcast for you to connect to during
       Configuration Mode (Host Mode). The last four of you Pi's serial number
       will be appended to whatever you enter here.
@@ -76,7 +73,7 @@ CONFIGURATION:
       leave the port at the default setting [80] there is no need to specify the
       port when navigating to the page.
 
-==== "SSL Mode" [default: n]: With this option enabled your RaspiWifi
+==== "SSL Mode" [default: n]: With this option enabled your BilirWifi
       configuration page will be sent over an SSL encrypted connection (don't
       forget the "s" when navigating to https://10.0.0.1:9191 when using
       this mode). You will get a certificate error from your web browser when
@@ -84,18 +81,15 @@ CONFIGURATION:
       verified by a third party but everything will be properly encrypted anyway.
 
 == All of these variables can be set at any time after the Initial Setup has
-been running by editing the /etc/raspiwifi/raspiwifi.conf
+been running by editing the /etc/bilirwifi/BilirWifi.conf
 
 
 USAGE:
 
-== Connect to the "RaspiWiFi[xxxx] Setup" access point using any other WiFi enabled
+== Connect to the "bilir[MAC ADRESS]" access point using any other WiFi enabled
 device.
 
-== Navigate to [10.0.0.1], [raspiwifisetup.com], or
-[idliketoconfigurethewifionthisdevicenowplease.com] (I was debating whether this
-was funny or not and, yes, it was) using any web browser on the device you
-connected with. (don't forget to manually start with [https://] when using SSL mode)
+== Navigate to [10.0.0.1] in your web browser.
 
 == Select the WiFi connection you'd like your Raspberry Pi to connect to from
 the drop down list and enter its wireless password on the page provided. If no
@@ -115,7 +109,7 @@ enable the new configuration.
 
 == You can also use the Pi in a point-to-point connection mode by leaving it in
 Configuration Mode. All services will be addresible in their normal way at
-10.0.0.1 while connected to the "RaspiWiFi[xxxx] Setup" AP.
+10.0.0.1 while connected to the "bilir[MAC ADDRESS] Setup" AP.
 
 
 
@@ -128,15 +122,15 @@ or if incorrect connection information is ever entered. Just press and hold for
 10 seconds or longer.
 
 == You can also reset the device by running the manual_reset.py in the
-/usr/lib/raspiwifi/reset_device directory as root or with sudo.
+/usr/lib/bilirwifi/reset_device directory as root or with sudo.
 
 
 UNINSTALLATION:
 
-== You can uninstall RaspiWiFi at any time by running:
+== You can uninstall BilirWifi at any time by running:
    
-   sudo python3 /usr/lib/raspiwifi/uninstall.python3
+   sudo python3 /usr/lib/bilirwifi/uninstall.python3
 
    You can also run it from the "libs/" directory from a fresh clone if you've 
-   installed from a previous version and don't have /usr/lib/raspiwifi/uninstall.py 
+   installed from a previous version and don't have /usr/lib/bilirwifi/uninstall.py
    available.

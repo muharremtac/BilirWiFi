@@ -61,7 +61,7 @@ def save_wpa_credentials():
 
     def sleep_and_reboot_for_wpa():
         time.sleep(2)
-        os.system('cp /usr/lib/raspiwifi/configuration_app/rc.local.backup /etc/rc.local')
+        os.system('cp /usr/lib/bilirwifi/configuration_app/rc.local.backup /etc/rc.local')
         os.system('reboot')
 
     t = Thread(target=sleep_and_reboot_for_wpa)
@@ -89,7 +89,7 @@ def scan_wifi_networks():
 
 
 def create_wpa_supplicant(ssid, wifi_key):
-    os.system('cp /usr/lib/raspiwifi/configuration_app/rc.local.backup /etc/rc.local')
+    os.system('cp /usr/lib/bilirwifi/configuration_app/rc.local.backup /etc/rc.local')
 
     uuid1 = uuid.uuid1()
     temp_nmconnection_file = open('wifi.nmconnection.tmp', 'w')
@@ -137,18 +137,18 @@ def create_wpa_supplicant(ssid, wifi_key):
     nmcli.communicate()
 
 def set_ap_client_mode():
-    os.system('cp /usr/lib/raspiwifi/configuration_app/rc.local.backup /etc/rc.local')
-    os.system('rm -f /etc/raspiwifi/host_mode')
-    os.system('rm /etc/cron.raspiwifi/aphost_bootstrapper')
-    os.system('cp /usr/lib/raspiwifi/reset_device/static_files/apclient_bootstrapper /etc/cron.raspiwifi/')
-    os.system('chmod +x /etc/cron.raspiwifi/apclient_bootstrapper')
+    os.system('cp /usr/lib/bilirwifi/configuration_app/rc.local.backup /etc/rc.local')
+    os.system('rm -f /etc/bilirwifi/host_mode')
+    os.system('rm /etc/cron.bilirwifi/aphost_bootstrapper')
+    os.system('cp /usr/lib/bilirwifi/reset_device/static_files/apclient_bootstrapper /etc/cron.bilirwifi/')
+    os.system('chmod +x /etc/cron.bilirwifi/apclient_bootstrapper')
     os.system('mv /etc/dnsmasq.conf.original /etc/dnsmasq.conf')
     os.system('mv /etc/dhcpcd.conf.original /etc/dhcpcd.conf')
     os.system('reboot')
 
 
 def update_wpa(wpa_enabled, wpa_key):
-    with fileinput.FileInput('/etc/raspiwifi/raspiwifi.conf', inplace=True) as raspiwifi_conf:
+    with fileinput.FileInput('/etc/bilirwifi/bilirwifi.conf', inplace=True) as raspiwifi_conf:
         for line in raspiwifi_conf:
             if 'wpa_enabled=' in line:
                 line_array = line.split('=')
@@ -165,7 +165,7 @@ def update_wpa(wpa_enabled, wpa_key):
 
 
 def config_file_hash():
-    config_file = open('/etc/raspiwifi/raspiwifi.conf')
+    config_file = open('/etc/bilirwifi/bilirwifi.conf')
     config_hash = {}
 
     for line in config_file:
