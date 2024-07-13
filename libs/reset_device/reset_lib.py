@@ -25,6 +25,7 @@ def wpa_check_activate(wpa_enabled, wpa_key):
 	if wpa_enabled == '1' and wpa_active == False:
 		reboot_required = True
 		os.system('cp /usr/lib/raspiwifi/reset_device/static_files/hostapd.conf.wpa /etc/hostapd/hostapd.conf')
+		os.system('dos2unix /etc/hostapd/hostapd.conf')
 
 	if wpa_enabled == '1':
 		with fileinput.FileInput('/etc/hostapd/hostapd.conf', inplace=True) as hostapd_conf:
